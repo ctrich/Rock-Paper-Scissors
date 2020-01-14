@@ -3,11 +3,14 @@
 <head>
 	<title></title>
 	<script type="text/javascript">
+
+		//randomly selects for the computer
 		function computerPlay() {
 			let choice = ["ROCK", "PAPER", "SCISSORS"];
 			return choice[Math.floor(Math.random() * choice.length)];
 		}
 
+		//compares the players and computers selection and returns the result
 		function gameRound(playerSelection, computerSelection) {
 			let win = "You win!";
 			let Lose = "You Lose!";
@@ -24,6 +27,7 @@
 			}
 		}
 
+		//plays a game of rock paper scissors
 		function game() {
 
 			let round = 0;
@@ -33,9 +37,13 @@
 			while(round < 5) {
 				let playerChoice = prompt("Enter Rock, Paper, or Scissors");
 				let computerChoice = computerPlay();
-				console.log("The computer chose " + computerChoice + "\nYou chose " + playerChoice);
+
+				console.log("The computer chose " + computerChoice + 
+					"\nYou chose " + playerChoice);
+
 				let result = gameRound(playerChoice, computerChoice);
 				console.log(result);
+
 				if (result === "You win!") {
 					playerScore++;
 				} else if (result === "You Lose!") {
@@ -43,8 +51,9 @@
 				}
 				round++;
 			}
-			
-			console.log("Player Score =" + playerScore + "\nComputer Score =" + compScore);
+
+			console.log("Player Score =" + playerScore + 
+				"\nComputer Score =" + compScore);
 		}
 
 	</script>
