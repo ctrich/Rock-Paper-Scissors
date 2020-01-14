@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		function computerPlay() {
+			let choice = ["ROCK", "PAPER", "SCISSORS"];
+			return choice[Math.floor(Math.random() * choice.length)];
+		}
+
+		function gameRound(playerSelection, computerSelection) {
+			let win = "You win!";
+			let Lose = "You Lose!";
+			if (playerSelection.toUpperCase() === "ROCK" && computerSelection === "PAPER") {
+				return Lose;
+			} else if (playerSelection.toUpperCase() === "PAPER" && computerSelection === "SCISSORS") {
+				return Lose;
+			} else if (playerSelection.toUpperCase() === "SCISSORS" && computerSelection === "ROCK") {
+				return Lose;
+			} else if(playerSelection.toUpperCase() == computerSelection){
+				return "Tie";
+			} else {
+				return win;
+			}
+		}
+
+		function game() {
+
+			let round = 0;
+			let playerScore = 0;
+			let compScore = 0;
+
+			while(round < 5) {
+				let playerChoice = prompt("Enter Rock, Paper, or Scissors");
+				let computerChoice = computerPlay();
+				console.log("The computer chose " + computerChoice + "\nYou chose " + playerChoice);
+				let result = gameRound(playerChoice, computerChoice);
+				console.log(result);
+				if (result === "You win!") {
+					playerScore++;
+				} else if (result === "You Lose!") {
+					compScore++;
+				}
+				round++;
+			}
+			
+			console.log("Player Score =" + playerScore + "\nComputer Score =" + compScore);
+		}
+
+	</script>
+</head>
+<body>
+
+</body>
+</html>
