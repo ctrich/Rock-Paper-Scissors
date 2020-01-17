@@ -2,63 +2,80 @@
 <html>
 <head>
 	<title></title>
-	<script type="text/javascript">
-
-		//randomly selects for the computer
-		function computerPlay() {
-			let choice = ["ROCK", "PAPER", "SCISSORS"];
-			return choice[Math.floor(Math.random() * choice.length)];
-		}
-
-		//compares the players and computers selection and returns the result
-		function gameRound(playerSelection, computerSelection) {
-			let win = "You win!";
-			let Lose = "You Lose!";
-			if (playerSelection.toUpperCase() === "ROCK" && computerSelection === "PAPER") {
-				return Lose;
-			} else if (playerSelection.toUpperCase() === "PAPER" && computerSelection === "SCISSORS") {
-				return Lose;
-			} else if (playerSelection.toUpperCase() === "SCISSORS" && computerSelection === "ROCK") {
-				return Lose;
-			} else if(playerSelection.toUpperCase() == computerSelection){
-				return "Tie";
-			} else {
-				return win;
-			}
-		}
-
-		//plays a game of rock paper scissors
-		function game() {
-
-			let round = 0;
-			let playerScore = 0;
-			let compScore = 0;
-
-			while(round < 5) {
-				let playerChoice = prompt("Enter Rock, Paper, or Scissors");
-				let computerChoice = computerPlay();
-
-				console.log("The computer chose " + computerChoice + 
-					"\nYou chose " + playerChoice);
-
-				let result = gameRound(playerChoice, computerChoice);
-				console.log(result);
-
-				if (result === "You win!") {
-					playerScore++;
-				} else if (result === "You Lose!") {
-					compScore++;
-				}
-				round++;
-			}
-
-			console.log("Player Score =" + playerScore + 
-				"\nComputer Score =" + compScore);
-		}
-
-	</script>
+	<link rel="stylesheet" type="text/css" href="rockPaperScissors.css">
 </head>
 <body>
+  <div id='container'>
+	<div class='buttons'>
+		<button class='btn' id='rock' value='Rock'>Rock</button>
+		<button class='btn' id='paper' value='Paper'>Paper</button>
+		<button class='btn' id='scissors' value='Scissors'>Scissors</button>
+	</div>
+	<div class='scores'>
+		<p id="score"></p>
+	</div>
+  </div>
+<script type="text/javascript">
 
+
+	const btns = document.querySelectorAll(".btn");
+	const score = document.querySelector('#score');
+	const container = document.querySelector('.scores');
+	const roundScore = document.createElement('p');
+
+	roundScore.classList.add('roundScore');
+	container.insertBefore(roundScore, score);
+
+	btns.forEach(btn => btn.addEventListener("click", gameRound));
+
+	//randomly selects for the computer
+	function computerPlay() {
+		let choice = ["Rock", "Paper", "Scissors"];
+		return choice[Math.floor(Math.random() * choice.length)];
+	}
+
+
+	function updateScore(playerScore, computerScore) {
+		if ((playerScore + computerScore) >= 5) {
+
+			if (playerScore > computerScore) {
+				score.textContent = `You win! your score: ${playerScore} computer score: ${computerScore}`;
+				computerScore =0;
+				playerScore =0;
+
+			} else if (computerScore > playerScore) {
+				score.textContent = `You Lose! your score: ${playerScore} computer score: ${computerScore}`;
+				computerScore =0;
+				playerScore =0;
+			}
+
+		} else {
+			score.textContent = `You: ${playerScore} computer: ${computerScore}`;
+		}
+	}
+
+	//compares the players and computers selection and returns the result
+	function gameRound() {
+		if (typeof playerScore == 'undefined' || playerScore + computerScore == 5) {
+			playerScore =0;
+			computerScore =0;
+		}
+		let playerSelection = this.value;
+		let computerSelection = computerPlay();
+
+		if (playerSelection.toUpperCase() === "ROCK" && computerSelection === "Paper") {
+			computerScore++;
+		} else if (playerSelection.toUpperCase() === "PAPER" && computerSelection === "Scissors") {
+			computerScore++;
+		} else if (playerSelection.toUpperCase() === "SCISSORS" && computerSelection === "Rock") {
+			computerScore++;
+		} else if(playerSelection == computerSelection){
+		} else {
+			playerScore++;
+		}
+		roundScore.textContent = `${playerSelection} vs ${computerSelection}`;
+		updateScore(playerScore, computerScore);
+	}
+</script>
 </body>
 </html>
